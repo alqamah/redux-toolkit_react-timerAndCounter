@@ -50,3 +50,4 @@ const timerSlice = createSlice({
 
 export const timerReducer = timerSlice.reducer;
 export const timerActions = timerSlice.actions;
+export const timerSelector = (state) => state.timerReducer;

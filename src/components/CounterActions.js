@@ -7,11 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 // } from "../redux/actions/counterActions";
 
 import { counterActions } from "../redux/reducers/counterReducer";
+import { counterSelector } from "../redux/reducers/counterReducer";
 
 export const CounterActions = () => {
   const dispatch = useDispatch();
   // change as per the store implementation
-  const { count } = useSelector((state) => state.counterReducer);
+  //const { count } = useSelector((state) => state.counterReducer);
+  
+  const {count} = useSelector(counterSelector);
 
   return (
     <div className="actions">

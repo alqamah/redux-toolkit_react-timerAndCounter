@@ -6,12 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 //   startTimer
 // } from "../redux/actions/timerActions";
 import { timerActions } from "../redux/reducers/timerReducer";
+import { timerSelector } from "../redux/reducers/timerReducer";
 
 export const TimerActions = () => {
   const dispatch = useDispatch();
   // change as per the store implementation
-  const { isRunning } = useSelector((state) => state.timerReducer);
-
+  //const { isRunning } = useSelector((state) => state.timerReducer);
+  const {isRunning} = useSelector(timerSelector);
   return (
     <div className="actions">
       <button disabled={isRunning} onClick={() => dispatch(timerActions.start_timer())}>
