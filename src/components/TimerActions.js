@@ -1,33 +1,44 @@
 import { useDispatch, useSelector } from "react-redux";
-// change the timer actions imports
-// import {
-//   pauseTimer,
-//   resetTimer,
-//   startTimer
-// } from "../redux/actions/timerActions";
-import { timerActions } from "../redux/reducers/timerReducer";
-import { timerSelector } from "../redux/reducers/timerReducer";
+import { useEffect } from "react";
+import {
+  pauseTimer,
+  resetTimer,
+  startTimer,
+  timerSelector
+} from "../redux/reducers/timerReducer";
+import { alertSelector, resetAlert } from "../redux/reducers/alertReducer";
 
 export const TimerActions = () => {
   const dispatch = useDispatch();
-  // change as per the store implementation
-  //const { isRunning } = useSelector((state) => state.timerReducer);
-  const {isRunning} = useSelector(timerSelector);
+  const { isRunning } = useSelector(timerSelector);
+  const { message } = useSelector(alertSelector);
+
+  useEffect(() => {
+    let timeoutId;
+    if (message) {
+      timeoutId = setTimeout(() => {
+        dispatch(resetAlert());
+      }, 2000);
+    }
+    return () => clearTimeout(timeoutId);
+  }, [message, dispatch]);
+
   return (
     <div className="actions">
-      <button disabled={isRunning} onClick={() => dispatch(timerActions.start_timer())}>
+      {message && <div className="alert">{message}</div>}
+      <button disabled={isRunning} onClick={() => dispatch(startTimer())}>
         <img
           src="https://cdn-icons-png.flaticon.com/512/7709/7709039.png"
           alt="start"
         />
       </button>
-      <button disabled={!isRunning} onClick={() => dispatch(timerActions.pause_timer())}>
+      <button disabled={!isRunning} onClick={() => dispatch(pauseTimer())}>
         <img
           src="https://cdn-icons-png.flaticon.com/512/2404/2404385.png"
           alt="pause"
         />
       </button>
-      <button onClick={() => dispatch(timerActions.reset_timer())}>
+      <button onClick={() => dispatch(resetTimer())}>
         <img
           src="https://cdn-icons-png.flaticon.com/512/9923/9923627.png"
           alt="reset"
